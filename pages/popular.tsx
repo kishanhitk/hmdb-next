@@ -55,10 +55,6 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: { movies: movie },
-    redirect: {
-      destination: "",
-      
-    },
   };
 };
 export default popular;
