@@ -9,7 +9,7 @@ function popular({ movies }: PopularPageProps) {
   return (
     <ul>
       {movies.map((movie) => (
-        <li>{movie.title}</li>
+        <li key={movie.id}>{movie.title}</li>
       ))}
     </ul>
   );
@@ -21,7 +21,6 @@ export const getStaticProps = async () => {
   const movie: MovieEntity[] = data.results.map((data: MovieEntity) => {
     return data;
   });
-  console.log(movie);
   return { props: { movies: movie } };
 };
 export default popular;
