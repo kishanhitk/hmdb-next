@@ -16,7 +16,6 @@ interface MovieCardProps {
   movie: MovieEntity;
 }
 function MovieCard({ movie }: MovieCardProps) {
-  console.log(movie.title);
   const toast = useToast();
   const favoriteCtx = useContext(FavoriteContext);
   const ratingColor = movie.vote_average > 8 ? "green" : "blue";

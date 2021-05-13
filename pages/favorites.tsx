@@ -9,5 +9,9 @@ function Favorites() {
     </div>
   );
 }
+export const getStaticProps = async () => {
+  console.log(process.env.TMDB_API_KEY);
+  return { props: {} };
+};
 
 export default Favorites;
