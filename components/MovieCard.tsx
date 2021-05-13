@@ -6,11 +6,13 @@ import {
   Box,
   IconButton,
   useToast,
+  Heading,
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { MovieEntity } from "../interfaces/Movies";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import FavoriteContext from "../store/favorite-context";
+import classes from "./MovieCard.module.css";
 const IMAGE_API = "https://image.tmdb.org/t/p/w500/";
 interface MovieCardProps {
   movie: MovieEntity;
@@ -41,6 +43,7 @@ function MovieCard({ movie }: MovieCardProps) {
   };
   return (
     <Flex
+      className={classes.movie}
       rounded={5}
       direction="column"
       maxWidth="260px"
@@ -76,6 +79,10 @@ function MovieCard({ movie }: MovieCardProps) {
           m={3}
         ></IconButton>
       )}
+      <div className={classes.movieOver}>
+        <Heading>Overview:</Heading>
+        <p>{movie.overview}</p>
+      </div>
     </Flex>
   );
 }
