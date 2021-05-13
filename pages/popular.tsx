@@ -37,7 +37,7 @@ function popular({ movies }: PopularPageProps) {
             </Button>
           </Link>
         </div>
-        <Flex wrap="wrap" justifyContent="center">
+        <Flex m={3} wrap="wrap" justifyContent="center">
           {movies.map((movie) => (
             <MovieCard movie={movie}></MovieCard>
           ))}

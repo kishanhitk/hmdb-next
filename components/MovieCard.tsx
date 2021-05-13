@@ -44,11 +44,17 @@ function MovieCard({ movie }: MovieCardProps) {
     <Flex
       rounded={5}
       direction="column"
-      maxWidth="220px"
+      maxWidth="260px"
+      maxH="520px"
       m={5}
       background="blue.300"
+      justifyContent="space-between"
     >
-      <Image roundedTop={5} src={IMAGE_API + movie.poster_path} />
+      <Image
+        roundedTop={5}
+        minWidth="100%"
+        src={IMAGE_API + movie.poster_path}
+      />
       <Flex alignItems="center" justifyContent="space-between" m={3}>
         <Text>{movie.title}</Text>
         <Box rounded={4} p={1} background="white">
