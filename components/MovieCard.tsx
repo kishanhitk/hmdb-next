@@ -21,7 +21,7 @@ interface MovieCardProps {
 function MovieCard({ movie }: MovieCardProps) {
   const toast = useToast();
   const favoriteCtx = useContext(FavoriteContext);
-  const ratingColor = movie.vote_average > 8 ? "green" : "blue";
+  const ratingColor = movie.vote_average > 8 ? "green.600" : "blue";
   const isFavorite = favoriteCtx.isFavorite(movie);
   const overviewBgColor = useColorModeValue("gray.300", "gray.900");
   const cardBgColor = useColorModeValue("gray.300", "gray.900");
@@ -47,6 +47,8 @@ function MovieCard({ movie }: MovieCardProps) {
   };
   return (
     <Flex
+      cursor="pointer"
+      onDoubleClick={handleFavouriteButtonClick}
       className={classes.movie}
       rounded={5}
       direction="column"
@@ -54,35 +56,36 @@ function MovieCard({ movie }: MovieCardProps) {
       maxH="520px"
       m={5}
       background={cardBgColor}
-      justifyContent="space-between"
+      justifyContent="space-around"
     >
       <Image
+        background="white"
+        alignSelf="flex-start"
+        justifySelf="flex-start"
         roundedTop={5}
         minWidth="100%"
         src={IMAGE_API + movie.poster_path}
       />
-      <Flex alignItems="center" justifyContent="space-between" m={3}>
-        <Text>{movie.title}</Text>
+      <Heading
+        onClick={handleFavouriteButtonClick}
+        cursor="pointer"
+        position="absolute"
+        r="0"
+        top="0"
+        zIndex="10"
+      >
+        {isFavorite ? "❤" : "🤍"}{" "}
+      </Heading>
+      <Flex alignItems="center" justifyContent="space-between" m="5">
+        <Text fontSize="xl" fontWeight="bold">
+          {movie.title}
+        </Text>
         <Box rounded={4} p={1} background="white">
-          <Text color={ratingColor}>{movie.vote_average}</Text>
+          <Text fontWeight="bold" color={ratingColor}>
+            {movie.vote_average}
+          </Text>
         </Box>
       </Flex>
-      {isFavorite ? (
-        <IconButton
-          color="red"
-          aria-label="Remove"
-          onClick={handleFavouriteButtonClick}
-          icon={<AiFillHeart size="2.5rem" />}
-          m={3}
-        ></IconButton>
-      ) : (
-        <IconButton
-          onClick={handleFavouriteButtonClick}
-          aria-label="Favorite"
-          icon={<AiOutlineHeart size="2.5rem"></AiOutlineHeart>}
-          m={3}
-        ></IconButton>
-      )}
       <Box className={classes.movieOver} background={overviewBgColor}>
         <Heading pb={4}>Overview</Heading>
         <Text>{movie.overview}</Text>

@@ -7,6 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
+import head from "next/head";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
@@ -15,6 +16,7 @@ import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 import MovieCard from "../components/MovieCard";
 import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
+import classes from "../styles/Popular.module.css";
 const API_KEY = process.env.TMDB_API_KEY;
 const POPULAR_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`;
@@ -26,6 +28,7 @@ function popular({ movies }: PopularPageProps) {
   const [movieData, setmovieData] = useState(movies);
   const [searchTerm, setsearchTerm] = useState("");
   const appBackground = useColorModeValue("gray.100", "gray.700");
+  const headerBackground = useColorModeValue("gray.300", "gray.900");
 
   const seachMovies = async (e: FormEvent) => {
     e.preventDefault();
@@ -48,27 +51,41 @@ function popular({ movies }: PopularPageProps) {
         <title>Popular Movies</title>
       </Head>
       <Flex direction="column">
-        <Flex direction="row">
+        <Flex
+          width="100%"
+          top="0"
+          position="sticky"
+          zIndex="11"
+          justifyContent="center"
+          direction="row"
+          p={4}
+          className={classes.header}
+        >
           <form
-            style={{ display: "flex", width: "100%" }}
+            style={{
+              display: "flex",
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
             onSubmit={(e) => {
               seachMovies(e);
             }}
           >
             <Input
+              fill="ThreeDFace"
+              justifySelf="center"
+              maxW="250px"
               onChange={(e) => {
                 setsearchTerm(e.target.value);
               }}
               placeholder="Search Movies"
             ></Input>
-            <Button type="submit">Search</Button>
-          </form>
-          <Link href="/favorites">
-            <Button colorScheme="purple" variant="outline">
-              <p>Favorites</p>
+            <Button ml={3} variant="solid" type="submit">
+              Search
             </Button>
-          </Link>
-          <ColorModeSwitcher />
+          </form>
+          <ColorModeSwitcher justifySelf="flex-end" />
         </Flex>
         <Flex m={3} wrap="wrap" justifyContent="center">
           {movieData.map((movie) => (
