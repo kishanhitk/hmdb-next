@@ -130,9 +130,11 @@ export default function Favourites() {
                 Add some Top Rated ⭐ to your favourites.
               </Text>
               <br />
-              <Button display="block">
-                <Link href="/toprated">Top Rated</Link>
-              </Button>
+              <Link href="/toprated">
+                <Button colorScheme="twitter" display="block">
+                  Top Rated
+                </Button>
+              </Link>
             </Stack>
           )}
           {favoriteCtx.favorites.reverse().map((movie) => (

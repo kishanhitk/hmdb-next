@@ -49,18 +49,20 @@ function MovieCard({ movie }: MovieCardProps) {
       className={classes.movie}
       rounded={5}
       direction="column"
-      maxWidth="260px"
-      maxH="520px"
+      height="420px"
+      width="260px"
       m={5}
       background={cardBgColor}
       justifyContent="space-around"
     >
       <Image
-        background="white"
+        height="100%"
+        width="100%"
+        fit="cover"
         alignSelf="flex-start"
         justifySelf="flex-start"
         roundedTop={5}
-        minWidth="100%"
+        fallbackSrc={`https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80`}
         src={IMAGE_API + movie.poster_path}
       />
       <Heading
@@ -71,18 +73,27 @@ function MovieCard({ movie }: MovieCardProps) {
         top="0"
         zIndex="10"
       >
-        {isFavorite ? "❤" : "🤍"}{" "}
+        {isFavorite ? "❤" : "🤍"}
       </Heading>
-      <Flex alignItems="center" justifyContent="space-between" m="5">
-        <Text fontSize="xl" fontWeight="bold">
-          {movie.title}
-        </Text>
-        <Box rounded={4} p={1} background="white">
-          <Text fontWeight="bold" color={ratingColor}>
-            {movie.vote_average}
+      <Box
+        position="absolute"
+        r="0"
+        bottom="0"
+        width="100%"
+        className={classes.movieInfo}
+      >
+        <Flex alignItems="center" justifyContent="space-between" m="5">
+          <Text color="white" fontSize="md" fontWeight="bold">
+            {movie.title}
           </Text>
-        </Box>
-      </Flex>
+          <Box rounded={4} p={1} background="white">
+            <Text fontWeight="bold" color={ratingColor}>
+              {movie.vote_average}
+            </Text>
+          </Box>
+        </Flex>
+      </Box>
+
       <Box className={classes.movieOver} background={overviewBgColor}>
         <Heading pb={4}>Overview</Heading>
         <Text>{movie.overview}</Text>
