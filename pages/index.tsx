@@ -9,14 +9,16 @@ export default function Home() {
       <Head>
         <title>HMDB</title>
       </Head>
-      <Heading>HMDB</Heading>
-      <Text>Humara Movie Data Base</Text>
+      <Heading mb={2}>HMDB</Heading>
+      <Text mb={4} fontSize="xl">
+        Humara Movie Data Base
+      </Text>
+      <Text mb={3}>AI 😜 based movie recommendation</Text>
       <Link href="/popular">
         <Button m={5} colorScheme="purple">
-          <p>Popular Movies</p>
+          <p>Get Started!</p>
         </Button>
       </Link>
     </div>
   );
 }
-
