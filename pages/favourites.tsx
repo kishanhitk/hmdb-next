@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -11,6 +11,8 @@ import {
   useColorModeValue,
   useDisclosure,
   Text,
+  InputGroup,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
@@ -91,19 +93,19 @@ export default function Favourites() {
                 seachMovies(e);
               }}
             >
-              <Input
-                disabled={true}
-                fill="ThreeDFace"
-                justifySelf="center"
-                maxW="250px"
-                onChange={(e) => {
-                  setsearchTerm(e.target.value);
-                }}
-                placeholder="Search Movies"
-              ></Input>
-              <Button ml={3} variant="solid" type="submit">
-                <FaSearch></FaSearch>
-              </Button>
+              <InputGroup maxW="250px" justifySelf="center">
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<SearchIcon></SearchIcon>}
+                />
+                <Input
+                  type="search"
+                  placeholder="Search Movies"
+                  onChange={(e) => {
+                    setsearchTerm(e.target.value);
+                  }}
+                />
+              </InputGroup>
             </form>
             <ColorModeSwitcher justifySelf="flex-end" />
           </Flex>{" "}

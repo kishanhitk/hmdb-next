@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -7,6 +7,8 @@ import {
   HStack,
   IconButton,
   Input,
+  InputGroup,
+  InputLeftElement,
   Stack,
   useColorModeValue,
   useDisclosure,
@@ -100,18 +102,19 @@ function popular({ movies }: PopularPageProps) {
                 seachMovies(e);
               }}
             >
-              <Input
-                fill="ThreeDFace"
-                justifySelf="center"
-                maxW="250px"
-                onChange={(e) => {
-                  setsearchTerm(e.target.value);
-                }}
-                placeholder="Search Movies"
-              ></Input>
-              <Button ml={3} variant="solid" type="submit">
-                <FaSearch></FaSearch>
-              </Button>
+              <InputGroup maxW="250px" justifySelf="center">
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<SearchIcon></SearchIcon>}
+                />
+                <Input
+                  type="search"
+                  placeholder="Search Movies"
+                  onChange={(e) => {
+                    setsearchTerm(e.target.value);
+                  }}
+                />
+              </InputGroup>
             </form>
             <ColorModeSwitcher justifySelf="flex-end" />
           </Flex>{" "}
@@ -151,6 +154,3 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 export default popular;
-
-export const Page = (
-) => {};
