@@ -7,6 +7,7 @@ import {
   IconButton,
   useToast,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { MovieEntity } from "../interfaces/Movies";
@@ -22,6 +23,9 @@ function MovieCard({ movie }: MovieCardProps) {
   const favoriteCtx = useContext(FavoriteContext);
   const ratingColor = movie.vote_average > 8 ? "green" : "blue";
   const isFavorite = favoriteCtx.isFavorite(movie);
+  const overviewBgColor = useColorModeValue("gray.300", "gray.900");
+  const cardBgColor = useColorModeValue("gray.300", "gray.900");
+
   const handleFavouriteButtonClick = () => {
     if (!isFavorite) {
       favoriteCtx.addToFavorite(movie);
@@ -49,7 +53,7 @@ function MovieCard({ movie }: MovieCardProps) {
       maxWidth="260px"
       maxH="520px"
       m={5}
-      background="blue.300"
+      background={cardBgColor}
       justifyContent="space-between"
     >
       <Image
@@ -79,10 +83,10 @@ function MovieCard({ movie }: MovieCardProps) {
           m={3}
         ></IconButton>
       )}
-      <div className={classes.movieOver}>
-        <Heading>Overview:</Heading>
-        <p>{movie.overview}</p>
-      </div>
+      <Box className={classes.movieOver} background={overviewBgColor}>
+        <Heading pb={4}>Overview</Heading>
+        <Text>{movie.overview}</Text>
+      </Box>
     </Flex>
   );
 }

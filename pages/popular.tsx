@@ -1,9 +1,17 @@
-import { Box, Button, Flex, flexbox, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  flexbox,
+  Input,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { FormEvent } from "react";
+import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 import MovieCard from "../components/MovieCard";
 import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
@@ -17,6 +25,8 @@ interface PopularPageProps {
 function popular({ movies }: PopularPageProps) {
   const [movieData, setmovieData] = useState(movies);
   const [searchTerm, setsearchTerm] = useState("");
+  const appBackground = useColorModeValue("gray.100", "gray.700");
+
   const seachMovies = async (e: FormEvent) => {
     e.preventDefault();
     const res = await fetch(`/api/movie?query=${searchTerm}`);
@@ -33,7 +43,7 @@ function popular({ movies }: PopularPageProps) {
     setmovieData(movie);
   };
   return (
-    <>
+    <Box background={appBackground}>
       <Head>
         <title>Popular Movies</title>
       </Head>
@@ -58,6 +68,7 @@ function popular({ movies }: PopularPageProps) {
               <p>Favorites</p>
             </Button>
           </Link>
+          <ColorModeSwitcher />
         </Flex>
         <Flex m={3} wrap="wrap" justifyContent="center">
           {movieData.map((movie) => (
@@ -65,7 +76,7 @@ function popular({ movies }: PopularPageProps) {
           ))}
         </Flex>
       </Flex>
-    </>
+    </Box>
   );
 }
 
