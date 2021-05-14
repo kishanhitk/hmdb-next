@@ -26,14 +26,14 @@ import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
 import classes from "../styles/Popular.module.css";
 const API_KEY = process.env.TMDB_API_KEY;
-const POPULAR_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+const NOW_PLAYING_URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US`;
 const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`;
-interface PopularPageProps {
+interface LatestPageProps {
   movies: MovieEntity[];
 }
-const Links = ["Popular", "Favourites", "Top Rated", "Now Playing"];
+const Links = ["Popular", "Favourites", "Top Rated", "Latest"];
 
-function popular({ movies }: PopularPageProps) {
+function NowPlaying({ movies }: LatestPageProps) {
   const [movieData, setmovieData] = useState(movies);
   const [searchTerm, setsearchTerm] = useState("");
   const appBackground = useColorModeValue("gray.100", "gray.700");
@@ -58,7 +58,7 @@ function popular({ movies }: PopularPageProps) {
   return (
     <Box background={appBackground}>
       <Head>
-        <title>Popular Movies</title>
+        <title>Now Playing</title>
       </Head>
       <Flex direction="column">
         <Box top="0" position="sticky" width="100%" zIndex="11">
@@ -143,8 +143,9 @@ function popular({ movies }: PopularPageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(POPULAR_URL);
+  const res = await fetch(NOW_PLAYING_URL);
   const data = await res.json();
+  console.log(data);
   const movie: MovieEntity[] = data.results.map((data: MovieEntity) => {
     return data;
   });
@@ -152,8 +153,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: { movies: movie },
   };
 };
-export default popular;
+export default NowPlaying;
 
-export const Page = (
-  props: InferGetServerSidePropsType<PopularPageProps>
-) => {};
+export const Page = (props: InferGetServerSidePropsType<LatestPageProps>) => {};

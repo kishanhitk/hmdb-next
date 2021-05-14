@@ -25,16 +25,13 @@ import Navbar, { NavLink } from "../components/NavBar";
 import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
 import classes from "../styles/Popular.module.css";
-const API_KEY = process.env.TMDB_API_KEY;
-const POPULAR_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
-const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`;
-interface PopularPageProps {
-  movies: MovieEntity[];
-}
+
 const Links = ["Popular", "Favourites", "Top Rated", "Now Playing"];
 
-function popular({ movies }: PopularPageProps) {
-  const [movieData, setmovieData] = useState(movies);
+export default function Favourites() {
+  const favoriteCtx = useContext(FavoriteContext);
+  // const movies = favoriteCtx.favorites.reverse();
+  const [movieData, setmovieData] = useState(favoriteCtx.favorites.reverse());
   const [searchTerm, setsearchTerm] = useState("");
   const appBackground = useColorModeValue("gray.100", "gray.700");
   const headerBackground = useColorModeValue("gray.300", "gray.900");
@@ -42,23 +39,16 @@ function popular({ movies }: PopularPageProps) {
 
   const seachMovies = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await fetch(`/api/movie?query=${searchTerm}`);
-    const data = await res.json();
-    if (data.results == null || data.results.length < 1) {
-      setmovieData(movies);
-      return;
-    }
-    const movie: MovieEntity[] = data.results.map((data: MovieEntity) => {
-      return data;
-    });
-
+    const movie = favoriteCtx.favorites.filter((m: MovieEntity) =>
+      m.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     console.log(movie);
     setmovieData(movie);
   };
   return (
     <Box background={appBackground}>
       <Head>
-        <title>Popular Movies</title>
+        <title>Favourite Movies</title>
       </Head>
       <Flex direction="column">
         <Box top="0" position="sticky" width="100%" zIndex="11">
@@ -105,6 +95,7 @@ function popular({ movies }: PopularPageProps) {
               }}
             >
               <Input
+                disabled={true}
                 fill="ThreeDFace"
                 justifySelf="center"
                 maxW="250px"
@@ -133,7 +124,7 @@ function popular({ movies }: PopularPageProps) {
           ) : null}
         </Box>
         <Flex m={3} wrap="wrap" justifyContent="center">
-          {movieData.map((movie) => (
+          {favoriteCtx.favorites.reverse().map((movie) => (
             <MovieCard key={movie.id} movie={movie}></MovieCard>
           ))}
         </Flex>
@@ -141,19 +132,3 @@ function popular({ movies }: PopularPageProps) {
     </Box>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(POPULAR_URL);
-  const data = await res.json();
-  const movie: MovieEntity[] = data.results.map((data: MovieEntity) => {
-    return data;
-  });
-  return {
-    props: { movies: movie },
-  };
-};
-export default popular;
-
-export const Page = (
-  props: InferGetServerSidePropsType<PopularPageProps>
-) => {};

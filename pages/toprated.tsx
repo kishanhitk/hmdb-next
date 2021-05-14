@@ -26,14 +26,13 @@ import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
 import classes from "../styles/Popular.module.css";
 const API_KEY = process.env.TMDB_API_KEY;
-const POPULAR_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
-const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`;
+const TOP_RATED_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
 interface PopularPageProps {
   movies: MovieEntity[];
 }
 const Links = ["Popular", "Favourites", "Top Rated", "Now Playing"];
 
-function popular({ movies }: PopularPageProps) {
+function TopRated({ movies }: PopularPageProps) {
   const [movieData, setmovieData] = useState(movies);
   const [searchTerm, setsearchTerm] = useState("");
   const appBackground = useColorModeValue("gray.100", "gray.700");
@@ -143,7 +142,7 @@ function popular({ movies }: PopularPageProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(POPULAR_URL);
+  const res = await fetch(TOP_RATED_URL);
   const data = await res.json();
   const movie: MovieEntity[] = data.results.map((data: MovieEntity) => {
     return data;
@@ -152,7 +151,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: { movies: movie },
   };
 };
-export default popular;
+export default TopRated;
 
 export const Page = (
   props: InferGetServerSidePropsType<PopularPageProps>
