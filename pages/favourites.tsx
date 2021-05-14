@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Flex,
-  flexbox,
   Heading,
   HStack,
   IconButton,
@@ -13,8 +12,6 @@ import {
   useDisclosure,
   Text,
 } from "@chakra-ui/react";
-import { GetStaticProps, InferGetServerSidePropsType } from "next";
-import head from "next/head";
 import Head from "next/head";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
@@ -23,7 +20,6 @@ import { FaSearch } from "react-icons/fa";
 import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 import Footer from "../components/Footer";
 import MovieCard from "../components/MovieCard";
-import Navbar, { NavLink } from "../components/NavBar";
 import SectionHeading from "../components/SectionHeading";
 import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
@@ -33,11 +29,9 @@ const Links = ["Popular", "Favourites", "Top Rated", "Now Playing"];
 
 export default function Favourites() {
   const favoriteCtx = useContext(FavoriteContext);
-  // const movies = favoriteCtx.favorites.reverse();
   const [movieData, setmovieData] = useState(favoriteCtx.favorites.reverse());
   const [searchTerm, setsearchTerm] = useState("");
   const appBackground = useColorModeValue("gray.100", "gray.700");
-  const headerBackground = useColorModeValue("gray.300", "gray.900");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const seachMovies = async (e: FormEvent) => {

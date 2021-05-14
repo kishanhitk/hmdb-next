@@ -3,10 +3,8 @@ import {
   Box,
   Button,
   Flex,
-  flexbox,
   Heading,
   HStack,
-  Text,
   IconButton,
   Input,
   Stack,
@@ -14,23 +12,19 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
-import head from "next/head";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { FormEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 import Footer from "../components/Footer";
 import MovieCard from "../components/MovieCard";
-import Navbar, { NavLink } from "../components/NavBar";
 import SectionHeading from "../components/SectionHeading";
 import { MovieEntity } from "../interfaces/Movies";
-import FavoriteContext from "../store/favorite-context";
 import classes from "../styles/Popular.module.css";
 const API_KEY = process.env.TMDB_API_KEY;
 const NOW_PLAYING_URL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US`;
-const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false`;
 interface LatestPageProps {
   movies: MovieEntity[];
 }
@@ -40,7 +34,6 @@ function NowPlaying({ movies }: LatestPageProps) {
   const [movieData, setmovieData] = useState(movies);
   const [searchTerm, setsearchTerm] = useState("");
   const appBackground = useColorModeValue("gray.100", "gray.700");
-  const headerBackground = useColorModeValue("gray.300", "gray.900");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const seachMovies = async (e: FormEvent) => {
@@ -161,4 +154,4 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 export default NowPlaying;
 
-export const Page = (props: InferGetServerSidePropsType<LatestPageProps>) => {};
+export const Page = () => {};

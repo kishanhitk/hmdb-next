@@ -2,16 +2,13 @@ import {
   Text,
   Flex,
   Image,
-  Button,
   Box,
-  IconButton,
   useToast,
   Heading,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { MovieEntity } from "../interfaces/Movies";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import FavoriteContext from "../store/favorite-context";
 import classes from "./MovieCard.module.css";
 const IMAGE_API = "https://image.tmdb.org/t/p/w500/";

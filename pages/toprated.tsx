@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Flex,
-  flexbox,
   Heading,
   HStack,
   IconButton,
@@ -13,19 +12,16 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
-import head from "next/head";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { FormEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 import Footer from "../components/Footer";
 import MovieCard from "../components/MovieCard";
-import Navbar, { NavLink } from "../components/NavBar";
 import SectionHeading from "../components/SectionHeading";
 import { MovieEntity } from "../interfaces/Movies";
-import FavoriteContext from "../store/favorite-context";
 import classes from "../styles/Popular.module.css";
 const API_KEY = process.env.TMDB_API_KEY;
 const TOP_RATED_URL = `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`;
