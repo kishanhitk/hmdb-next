@@ -58,86 +58,80 @@ function NowPlaying({ movies }: LatestPageProps) {
       <Head>
         <title>Now Playing</title>
       </Head>
-      <Flex direction="column">
-        <Box top="0" position="sticky" width="100%" zIndex="11">
-          {" "}
-          <Flex
-            width="100%"
-            justifyContent="center"
-            direction="row"
-            p={4}
-            className={classes.header}
+      <HStack
+        top="0"
+        position="sticky"
+        width="100%"
+        zIndex="11"
+        p={4}
+        className={classes.header}
+      >
+        <IconButton
+          mr={3}
+          size={"md"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={"Open Menu"}
+          display={{ md: !isOpen ? "none" : "inherit" }}
+          onClick={isOpen ? onClose : onOpen}
+        />{" "}
+        <HStack spacing={8}>
+          <Heading display={{ base: "none", md: "flex" }}>HMDB</Heading>
+          <HStack
+            as={"nav"}
+            spacing={4}
+            display={{ base: "none", md: "inherit" }}
           >
-            {" "}
-            <IconButton
-              mr={3}
-              size={"md"}
-              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-              aria-label={"Open Menu"}
-              display={{ md: !isOpen ? "none" : "inherit" }}
-              onClick={isOpen ? onClose : onOpen}
-            />{" "}
-            <HStack spacing={8}>
-              <Heading display={{ base: "none", md: "flex" }}>HMDB</Heading>
-              <HStack
-                as={"nav"}
-                spacing={4}
-                display={{ base: "none", md: "inherit" }}
-              >
-                {Links.map((link) => (
-                  <Link href={link.toLowerCase().replace(/ /g, "")} key={link}>
-                    {link}
-                  </Link>
-                ))}
-              </HStack>
-            </HStack>
-            <form
-              style={{
-                display: "flex",
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "center",
+            {Links.map((link) => (
+              <Link href={link.toLowerCase().replace(/ /g, "")} key={link}>
+                {link}
+              </Link>
+            ))}
+          </HStack>
+        </HStack>
+        <form
+          style={{
+            display: "flex",
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+          onSubmit={(e) => {
+            seachMovies(e);
+          }}
+        >
+          <InputGroup maxW="250px" justifySelf="center"  >
+            <InputLeftElement
+              pointerEvents="none"
+              children={<SearchIcon></SearchIcon>}
+            />
+            <Input
+              type="search"
+              placeholder="Search Movies"
+              onChange={(e) => {
+                setsearchTerm(e.target.value);
               }}
-              onSubmit={(e) => {
-                seachMovies(e);
-              }}
-            >
-              <InputGroup maxW="250px" justifySelf="center">
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<SearchIcon></SearchIcon>}
-                />
-                <Input
-                  type="search"
-                  placeholder="Search Movies"
-                  onChange={(e) => {
-                    setsearchTerm(e.target.value);
-                  }}
-                />
-              </InputGroup>
-            </form>
-            <ColorModeSwitcher justifySelf="flex-end" />
-          </Flex>{" "}
-          {isOpen ? (
-            <Box pb={4} className={classes.header}>
-              <Stack as={"nav"} p={10} spacing={4}>
-                <Heading>HMDB</Heading>
-                {Links.map((link) => (
-                  <Link href={link.toLowerCase().replace(/ /g, "")} key={link}>
-                    <Box>{link}</Box>
-                  </Link>
-                ))}
-              </Stack>
-            </Box>
-          ) : null}
+            />
+          </InputGroup>
+        </form>
+        <ColorModeSwitcher justifySelf="flex-end" />
+      </HStack>{" "}
+      {isOpen ? (
+        <Box pb={4} className={classes.header}>
+          <Stack as={"nav"} p={10} spacing={4}>
+            <Heading>HMDB</Heading>
+            {Links.map((link) => (
+              <Link href={link.toLowerCase().replace(/ /g, "")} key={link}>
+                <Box>{link}</Box>
+              </Link>
+            ))}
+          </Stack>
         </Box>
-        <SectionHeading text="Now Playing" />
-
-        <Flex m={3} wrap="wrap" justifyContent="center">
-          {movieData.map((movie) => (
-            <MovieCard key={movie.id} movie={movie}></MovieCard>
-          ))}
-        </Flex>
+      ) : null}
+      <SectionHeading text="Now Playing" />
+      <Flex m={3} wrap="wrap" justifyContent="center">
+        {movieData.map((movie) => (
+          <MovieCard key={movie.id} movie={movie}></MovieCard>
+        ))}
       </Flex>
       <Footer></Footer>
     </Box>
