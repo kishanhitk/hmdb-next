@@ -6,6 +6,7 @@ import {
   flexbox,
   Heading,
   HStack,
+  Text,
   IconButton,
   Input,
   Stack,
@@ -20,8 +21,10 @@ import React, { useContext, useState } from "react";
 import { FormEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
+import Footer from "../components/Footer";
 import MovieCard from "../components/MovieCard";
 import Navbar, { NavLink } from "../components/NavBar";
+import SectionHeading from "../components/SectionHeading";
 import { MovieEntity } from "../interfaces/Movies";
 import FavoriteContext from "../store/favorite-context";
 import classes from "../styles/Popular.module.css";
@@ -31,7 +34,7 @@ const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}
 interface LatestPageProps {
   movies: MovieEntity[];
 }
-const Links = ["Popular", "Favourites", "Top Rated", "Latest"];
+const Links = ["Popular", "Favourites", "Top Rated", "Now Playing"];
 
 function NowPlaying({ movies }: LatestPageProps) {
   const [movieData, setmovieData] = useState(movies);
@@ -79,12 +82,12 @@ function NowPlaying({ movies }: LatestPageProps) {
               display={{ md: !isOpen ? "none" : "inherit" }}
               onClick={isOpen ? onClose : onOpen}
             />{" "}
-            <HStack spacing={8} alignItems={"center"}>
+            <HStack spacing={8}>
               <Heading display={{ base: "none", md: "flex" }}>HMDB</Heading>
               <HStack
                 as={"nav"}
                 spacing={4}
-                display={{ base: "none", md: "flex" }}
+                display={{ base: "none", md: "inherit" }}
               >
                 {Links.map((link) => (
                   <Link href={link.toLowerCase().replace(/ /g, "")} key={link}>
@@ -105,7 +108,7 @@ function NowPlaying({ movies }: LatestPageProps) {
               }}
             >
               <Input
-                fill="ThreeDFace"
+                fill="messenger.500"
                 justifySelf="center"
                 maxW="250px"
                 onChange={(e) => {
@@ -132,12 +135,15 @@ function NowPlaying({ movies }: LatestPageProps) {
             </Box>
           ) : null}
         </Box>
+        <SectionHeading text="Now Playing" />
+
         <Flex m={3} wrap="wrap" justifyContent="center">
           {movieData.map((movie) => (
             <MovieCard key={movie.id} movie={movie}></MovieCard>
           ))}
         </Flex>
       </Flex>
+      <Footer></Footer>
     </Box>
   );
 }
