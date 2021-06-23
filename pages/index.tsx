@@ -14,9 +14,9 @@ export default function Home() {
         Humara Movie Data Base
       </Text>
       <Text mb={3}>AI 😜 based movie recommendation</Text>
-      <Link href="/popular">
+      <Link href="/popular" passHref>
         <Button m={5} colorScheme="purple">
-          <p>Get Started!</p>
+          Get Started!
         </Button>
       </Link>
     </div>

@@ -99,7 +99,7 @@ function NowPlaying({ movies }: LatestPageProps) {
             seachMovies(e);
           }}
         >
-          <InputGroup maxW="250px" justifySelf="center"  >
+          <InputGroup maxW="250px" justifySelf="center">
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon></SearchIcon>}
@@ -147,8 +147,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: { movies: movie },
+    revalidate: 3600,
   };
 };
 export default NowPlaying;
-
-export const Page = () => {};

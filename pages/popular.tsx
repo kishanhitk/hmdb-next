@@ -151,6 +151,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: { movies: movie },
+    revalidate: 3600,
   };
 };
 export default popular;
